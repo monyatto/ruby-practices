@@ -6,7 +6,7 @@ files = Dir.glob('*')
 opt = OptionParser.new
 opt.on('-a') { files = Dir.entries('.').sort }
 opt.parse(ARGV)
-max_word_count = files.max_by(&:length).length + 4
+max_word_count = files.max_by(&:length).length + 7
 column = 3
 line = (files.size / column.to_f).ceil
 
