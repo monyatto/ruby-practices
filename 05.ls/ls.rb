@@ -1,11 +1,24 @@
 # frozen_string_literal: true
 
-def ls
-  files = Dir.glob('*')
-  max_word_count = files.max_by(&:length).length + 4
-  column = 8
-  line = (files.size / column.to_f).ceil
+require 'optparse'
 
+filse_option = nil
+
+opt = OptionParser.new
+opt.on('-a') { filse_option = '-a' }
+opt.parse!(ARGV)
+
+files =
+  if filse_option == '-a'
+    Dir.glob('*', File::FNM_DOTMATCH, base: ARGV[0].to_s)
+  else
+    Dir.glob('*', base: ARGV[0].to_s)
+  end
+
+def print_files(files)
+  max_word_count = files.max_by(&:length).length + 7
+  column = 3
+  line = (files.size / column.to_f).ceil
   line.times do |line_count|
     column.times do |column_count|
       print_file = (line_count + line * column_count)
@@ -16,4 +29,4 @@ def ls
   print ''
 end
 
-puts ls
+puts print_files(files)
