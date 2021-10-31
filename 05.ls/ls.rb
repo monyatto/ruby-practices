@@ -4,10 +4,9 @@ require 'optparse'
 
 filse_option = nil
 
-OptionParser.new do |opt|
-  opt.on('-a') { filse_option = '-a' }
-  opt.parse!(ARGV)
-end
+opt = OptionParser.new
+opt.on('-a') { filse_option = '-a' }
+opt.parse!(ARGV)
 
 files =
   if filse_option == '-a'
