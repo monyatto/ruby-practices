@@ -2,18 +2,14 @@
 
 require 'optparse'
 
-filse_option = nil
+files_option = nil
 
 opt = OptionParser.new
-opt.on('-a') { filse_option = '-a' }
+opt.on('-r') { files_option = '-r' }
 opt.parse!(ARGV)
 
-files =
-  if filse_option == '-a'
-    Dir.glob('*', File::FNM_DOTMATCH, base: ARGV[0].to_s)
-  else
-    Dir.glob('*', base: ARGV[0].to_s)
-  end
+files = Dir.glob('*', base: ARGV[0].to_s)
+files.reverse! if files_option == '-r'
 
 def print_files(files)
   max_word_count = files.max_by(&:length).length + 7
