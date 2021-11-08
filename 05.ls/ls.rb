@@ -50,12 +50,9 @@ def l_option(files)
     file_stat_chars = file_stat.mode.to_s(8).chars
     file_stat_chars.unshift 0 if file_stat_chars.size < 6
     letters = 2
-    3.times do
-      letters += 1
-      l_option << permission_decision(file_stat_chars, letters)
-    end
+    l_option.concat((3..5).map { |letters| permission_decision(file_stat_chars, letters) })
     l_option <<
-      ' ' << file_stat.nlink.to_s << ' ' << Etc.getpwuid(File.stat(path).uid).name.to_s <<
+      '  ' << file_stat.nlink.to_s << ' ' << Etc.getpwuid(File.stat(path).uid).name.to_s <<
       '  ' << Etc.getgrgid(File.stat(path).gid).name.to_s << '  ' << file_stat.size <<
       file_stat.mtime.strftime(' %b %e %H:%M ') << file
     puts l_option.join
