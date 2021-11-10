@@ -4,16 +4,23 @@ require 'optparse'
 require 'pathname'
 require 'etc'
 
-files_option = nil
-
+files_option = []
 opt = OptionParser.new
-opt.on('-l') { files_option = '-l' }
+opt.on('-a') { files_option << '-a' }
+opt.on('-r') { files_option << '-r' }
+opt.on('-l') { files_option << '-l' }
 opt.parse!(ARGV)
 
-files = Dir.glob('*', base: ARGV[0].to_s)
+files =
+  if files_option.include?('-a')
+    Dir.glob('*', File::FNM_DOTMATCH, base: ARGV[0].to_s)
+  else
+    Dir.glob('*', base: ARGV[0].to_s)
+  end
+files.reverse! if files_option.include?('-r')
 
 def print_file(files, files_option)
-  if files_option == '-l'
+  if files_option.include?('-l')
     l_option(files)
   else
     no_option(files)
@@ -49,11 +56,9 @@ def l_option(files)
     l_option << ftype[file_stat.ftype]
     file_stat_chars = file_stat.mode.to_s(8).chars
     file_stat_chars.unshift 0 if file_stat_chars.size < 6
-    letters = 2
     l_option.concat((3..5).map { |letters| permission_decision(file_stat_chars, letters) })
-    l_option <<
-      '  ' << file_stat.nlink.to_s << ' ' << Etc.getpwuid(File.stat(path).uid).name.to_s <<
-      '  ' << Etc.getgrgid(File.stat(path).gid).name.to_s << '  ' << file_stat.size <<
+    l_option << file_stat.nlink.to_s.rjust(3) << ' ' << Etc.getpwuid(File.stat(path).uid).name.to_s <<
+      '  ' << Etc.getgrgid(File.stat(path).gid).name.to_s << file_stat.size.to_s.rjust(3) <<
       file_stat.mtime.strftime(' %b %e %H:%M ') << file
     puts l_option.join
   end
