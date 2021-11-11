@@ -46,20 +46,49 @@ def permission_decision(file_stat_chars, letters)
   permission[file_stat_chars[letters]]
 end
 
+def ftype_decision(file_stat)
+  ftype = { 'fifo' => 'p', 'characterSpecial' => 'c', 'directory' => 'd', 'blockSpecial' => 'b', 'file' => '-', 'link' => 'l', 'socket' => 's' }
+  ftype[file_stat.ftype]
+end
+
+def nlink_max_count_decision(files)
+  nlink = []
+  files.each do |file|
+    base = Pathname.new(File.expand_path(__dir__))
+    path = Pathname.new(File.expand_path(ARGV[0].to_s) << '/' << file)
+    file_stat = File::Stat.new(path.relative_path_from(base).to_s)
+    nlink << file_stat.nlink.to_s
+  end
+  nlink
+end
+
+def size_max_count_decision(files)
+  size = []
+  files.each do |file|
+    base = Pathname.new(File.expand_path(__dir__))
+    path = Pathname.new(File.expand_path(ARGV[0].to_s) << '/' << file)
+    file_stat = File::Stat.new(path.relative_path_from(base).to_s)
+    size << file_stat.size.to_s
+  end
+  size
+end
+
 def l_option(files)
+  nlink = nlink_max_count_decision(files)
+  size = size_max_count_decision(files)
+  nlink_max_count = nlink.max_by(&:length).length + 1
+  size_max_count = size.max_by(&:length).length + 1
   files.each do |file|
     base = Pathname.new(File.expand_path(__dir__))
     path = Pathname.new(File.expand_path(ARGV[0].to_s) << '/' << file)
     file_stat = File::Stat.new(path.relative_path_from(base).to_s)
     l_option = []
-    ftype = { 'fifo' => 'p', 'characterSpecial' => 'c', 'directory' => 'd', 'blockSpecial' => 'b', 'file' => '-', 'link' => 'l', 'socket' => 's' }
-    l_option << ftype[file_stat.ftype]
+    l_option << ftype_decision(file_stat)
     file_stat_chars = file_stat.mode.to_s(8).chars
     file_stat_chars.unshift 0 if file_stat_chars.size < 6
     l_option.concat((3..5).map { |letters| permission_decision(file_stat_chars, letters) })
-    l_option << file_stat.nlink.to_s.rjust(3) << ' ' << Etc.getpwuid(File.stat(path).uid).name.to_s <<
-      '  ' << Etc.getgrgid(File.stat(path).gid).name.to_s << file_stat.size.to_s.rjust(3) <<
-      file_stat.mtime.strftime(' %b %e %H:%M ') << file
+    l_option << file_stat.nlink.to_s.rjust(nlink_max_count) << ' ' << Etc.getpwuid(File.stat(path).uid).name.to_s << '  ' <<
+      Etc.getgrgid(File.stat(path).gid).name.to_s << file_stat.size.to_s.rjust(size_max_count) << file_stat.mtime.strftime(' %b %e %H:%M ') << file
     puts l_option.join
   end
 end
