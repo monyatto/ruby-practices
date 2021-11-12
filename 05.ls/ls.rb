@@ -52,25 +52,21 @@ def ftype_decision(file_stat)
 end
 
 def nlink_max_count_decision(files)
-  nlink = []
-  files.each do |file|
+  files.map do |file|
     base = Pathname.new(File.expand_path(__dir__))
     path = Pathname.new(File.expand_path(ARGV[0].to_s) << '/' << file)
     file_stat = File::Stat.new(path.relative_path_from(base).to_s)
-    nlink << file_stat.nlink.to_s
+    file_stat.nlink.to_s
   end
-  nlink
 end
 
 def size_max_count_decision(files)
-  size = []
-  files.each do |file|
+  files.map do |file|
     base = Pathname.new(File.expand_path(__dir__))
     path = Pathname.new(File.expand_path(ARGV[0].to_s) << '/' << file)
     file_stat = File::Stat.new(path.relative_path_from(base).to_s)
-    size << file_stat.size.to_s
+    file_stat.size.to_s
   end
-  size
 end
 
 def l_option(files)
