@@ -26,25 +26,19 @@ def print_pipe(option, lines)
   bytesize = lines.join.bytesize
   if option.include?('-l')
     file_element = [line]
-    print_space(file_element)
+    print_rjust_element(file_element)
   else
     file_element = [line, word, bytesize]
-    print_space(file_element)
+    print_rjust_element(file_element)
     print ' '
   end
   puts ''
 end
 
-def print_space(file_element)
+def print_rjust_element(file_element)
   file_element.each do |element|
-    count_space(element).times { print ' ' }
-    print element
+    print (element.to_s).rjust(8)
   end
-end
-
-def count_space(num)
-  max_num = 8
-  max_num - num.to_s.size
 end
 
 def print_argument(option, lines, words, bytesizes)
@@ -56,7 +50,7 @@ def print_argument(option, lines, words, bytesizes)
       words << word = File.open(file).read.split(/\s+/).size
       bytesizes << bytesize = File.open(file).read.bytesize
       file_element = option.include?('-l') ? [line] : [line, word, bytesize]
-      print_space(file_element)
+      print_rjust_element(file_element)
       print " #{file}"
       puts ''
     end
@@ -65,7 +59,7 @@ def print_argument(option, lines, words, bytesizes)
 
   total_element = []
   total_element << lines.sum << words.sum << bytesizes.sum
-  print_space(total_element)
+  print_rjust_element(total_element)
   puts ' total'
 end
 
