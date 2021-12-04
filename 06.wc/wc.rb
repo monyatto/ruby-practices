@@ -25,20 +25,14 @@ def print_pipe(option, lines)
   word = lines.join.split(/　|\s+/).size
   bytesize = lines.join.bytesize
   if option.include?('-l')
-    file_element = [line]
-    print_rjust_element(file_element)
+    file_elements = [line]
+    file_elements.each { |element| print element.to_s.rjust(8) }
   else
-    file_element = [line, word, bytesize]
-    print_rjust_element(file_element)
+    file_elements = [line, word, bytesize]
+    file_elements.each { |element| print element.to_s.rjust(8) }
     print ' '
   end
   puts ''
-end
-
-def print_rjust_element(file_element)
-  file_element.each do |element|
-    print (element.to_s).rjust(8)
-  end
 end
 
 def print_argument(option, lines, words, bytesizes)
@@ -49,17 +43,17 @@ def print_argument(option, lines, words, bytesizes)
       lines << line = File.open(file).read.count("\n")
       words << word = File.open(file).read.split(/\s+/).size
       bytesizes << bytesize = File.open(file).read.bytesize
-      file_element = option.include?('-l') ? [line] : [line, word, bytesize]
-      print_rjust_element(file_element)
+      file_elements = option.include?('-l') ? [line] : [line, word, bytesize]
+      file_elements.each { |element| print element.to_s.rjust(8) }
       print " #{file}"
       puts ''
     end
   end
   return unless ARGV.size > 1
 
-  total_element = []
-  total_element << lines.sum << words.sum << bytesizes.sum
-  print_rjust_element(total_element)
+  total_elements = []
+  total_elements << lines.sum << words.sum << bytesizes.sum
+  total_elements.each { |element| print element.to_s.rjust(8) }
   puts ' total'
 end
 
