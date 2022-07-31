@@ -17,9 +17,7 @@ class Game
   end
 
   def score
-    @frames.sum do |f|
-      f.score
-    end
+    @frames.sum(&:score)
   end
 
   private
