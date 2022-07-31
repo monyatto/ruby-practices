@@ -13,18 +13,7 @@ class Game
     scorings = convert_figures_into_scoring(figures, scorings)
 
     @frames = []
-    scorings.each_with_index do |scoring, i|
-      case scoring
-      when :strike
-        @frames[i] = Frame.new(marks[0], marks[1], marks[2])
-      when :spare
-        @frames[i] = Frame.new(marks[0], marks[1], marks[2])
-      when :none
-        @frames[i] = Frame.new(marks[0], marks[1])
-      end
-      marks = remove_marks(marks, scoring)
-    end
-    @frames[9] = Frame.new(marks[0], marks[1], marks[2])
+    convert_scoring_into_frames(marks, scorings)
   end
 
   def score
@@ -61,6 +50,21 @@ class Game
       figures = figures.pop(figures.length - 2)
     end
     scorings
+  end
+
+  def convert_scoring_into_frames(marks, scorings)
+    scorings.each_with_index do |scoring, i|
+      case scoring
+      when :strike
+        @frames[i] = Frame.new(marks[0], marks[1], marks[2])
+      when :spare
+        @frames[i] = Frame.new(marks[0], marks[1], marks[2])
+      when :none
+        @frames[i] = Frame.new(marks[0], marks[1])
+      end
+      marks = remove_marks(marks, scoring)
+    end
+    @frames[9] = Frame.new(marks[0], marks[1], marks[2])
   end
 
   def remove_marks(marks, scoring)
