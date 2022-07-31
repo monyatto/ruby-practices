@@ -2,8 +2,8 @@
 
 require_relative 'game'
 
-if ARGV[0].nil?
-  puts '引数にスコアを渡してください'
-else
+if ARGV[0]
   puts Game.new(ARGV[0]).score
+else
+  puts '引数にスコアを渡してください'
 end
