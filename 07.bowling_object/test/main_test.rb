@@ -14,7 +14,7 @@ class MainTest < Minitest::Test
     assert_equal 164, Game.new(mark).score
   end
 
-  def test_spere_of_0_and_10
+  def test_spere_of_zero_and_ten
     mark = '0,10,1,5,0,0,0,0,X,X,X,5,1,8,1,0,4'
     assert_equal 107, Game.new(mark).score
   end
