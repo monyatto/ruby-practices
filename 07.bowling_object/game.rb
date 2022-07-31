@@ -17,11 +17,9 @@ class Game
   end
 
   def score
-    total = 0
-    @frames.each do |f|
-      total += f.score
+    @frames.sum do |f|
+      f.score
     end
-    total
   end
 
   private
