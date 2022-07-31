@@ -4,22 +4,22 @@ require 'minitest/autorun'
 require_relative '../game'
 
 class MainTest < Minitest::Test
-  def test_score1
+  def test_spere_in_final_frame
     mark = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'
     assert_equal 139, Game.new(mark).score
   end
 
-  def test_score2
+  def test_three_strike_in_final_frame
     mark = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,X,X,X'
     assert_equal 164, Game.new(mark).score
   end
 
-  def test_score3
+  def test_spere_of_0_and_10
     mark = '0,10,1,5,0,0,0,0,X,X,X,5,1,8,1,0,4'
     assert_equal 107, Game.new(mark).score
   end
 
-  def test_score4
+  def test_frist_strike_in_final_frame
     mark = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,X,0,0'
     assert_equal 134, Game.new(mark).score
   end
