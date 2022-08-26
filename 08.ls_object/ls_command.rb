@@ -2,7 +2,7 @@
 
 require_relative 'argument'
 require_relative 'long_option_formatter'
-require_relative 'long_option'
+require_relative 'file_info'
 require_relative 'no_option'
 
 class LsCommand
@@ -12,7 +12,7 @@ class LsCommand
   end
 
   def list_segment
-    if @argument.long_option?
+    if @argument.file_info?
       puts FormatLongOption.new(segments, segments.map { |segment| LongOption.new(segment) }).format
     else
       NoOption.new(segments).format

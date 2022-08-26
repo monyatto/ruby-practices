@@ -22,7 +22,7 @@ class Argument
     option.include?('-r')
   end
 
-  def long_option?
+  def file_info?
     option.include?('-l')
   end
 end

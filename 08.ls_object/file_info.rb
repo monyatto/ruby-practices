@@ -3,7 +3,7 @@
 require 'pathname'
 require 'etc'
 
-class LongOption
+class FileInfo
   attr_reader :segment, :total, :filetype, :permission, :hardlink, :owner, :group, :filesize, :timestamp
 
   def initialize(segment)
