@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 class NoOptionFormatter
+  COLUMN = 3
+
   def initialize(segments)
     @segments = segments
   end
 
   def format
     row.times do |row_num|
-      column.times do |column_num|
+      COLUMN.times do |column_num|
         print @segments[print_num(row, row_num, column_num)].ljust(max_length(@segments, 3)) unless @segments[print_num(row, row_num, column_num)].nil?
-        puts '' if column_num == (column - 1)
+        puts '' if column_num == (COLUMN - 1)
       end
     end
   end
@@ -17,11 +19,7 @@ class NoOptionFormatter
   private
 
   def row
-    (@segments.size / column.to_f).ceil
-  end
-
-  def column
-    3
+    (@segments.size / COLUMN.to_f).ceil
   end
 
   def print_num(row, row_num, column_num)
