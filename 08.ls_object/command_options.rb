@@ -2,7 +2,7 @@
 
 require 'optparse'
 
-class Argument
+class CommandOptions
   attr_reader :option, :path
 
   def initialize
