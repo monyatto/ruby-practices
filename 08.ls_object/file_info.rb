@@ -6,6 +6,8 @@ require 'etc'
 class FileInfo
   attr_reader :segment, :total, :filetype, :permission, :hardlink, :owner, :group, :filesize, :timestamp
 
+  FTYPE = { 'fifo' => 'p', 'characterSpecial' => 'c', 'directory' => 'd', 'blockSpecial' => 'b', 'file' => '-', 'link' => 'l', 'socket' => 's' }.freeze
+
   def initialize(segment)
     @segment = segment
     @total = examine_total
@@ -25,8 +27,7 @@ class FileInfo
   end
 
   def examine_filetype
-    ftype = { 'fifo' => 'p', 'characterSpecial' => 'c', 'directory' => 'd', 'blockSpecial' => 'b', 'file' => '-', 'link' => 'l', 'socket' => 's' }
-    ftype[filestat.ftype]
+    FTYPE[filestat.ftype]
   end
 
   def filestat
