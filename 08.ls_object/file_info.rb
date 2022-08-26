@@ -38,7 +38,7 @@ class FileInfo
   end
 
   def base
-    Pathname.new(File.expand_path(__dir__))
+    Pathname.new(Dir.pwd)
   end
 
   def examine_permission

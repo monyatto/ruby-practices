@@ -13,7 +13,7 @@ class LsCommand
 
   def list_segment
     if @command_options.file_info?
-      puts FormatLongOption.new(segments, segments.map { |segment| LongOption.new(segment) }).format
+      puts LongOptionFormatter.new(segments, segments.map { |segment| FileInfo.new(segment) }).format
     else
       NoOptionFormatter.new(segments).format
     end

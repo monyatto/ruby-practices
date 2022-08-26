@@ -5,7 +5,7 @@ require_relative 'ls_command'
 require 'pathname'
 require 'etc'
 
-class LongOptionFormatterg
+class LongOptionFormatter
   def initialize(segments, file_informations)
     @file_informations = file_informations
     @segments = segments
@@ -45,7 +45,7 @@ class LongOptionFormatterg
   end
 
   def base
-    Pathname.new(File.expand_path(__dir__))
+    Pathname.new(Dir.pwd)
   end
 
   def path(segment)
