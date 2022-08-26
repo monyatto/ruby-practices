@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'argument'
-require_relative 'format_long_option'
+require_relative 'long_option_formatter'
 require_relative 'long_option'
 require_relative 'no_option'
 

@@ -5,7 +5,7 @@ require_relative 'ls_command'
 require 'pathname'
 require 'etc'
 
-class FormatLongOption
+class LongOptionFormatterg
   def initialize(segments, file_informations)
     @file_informations = file_informations
     @segments = segments
