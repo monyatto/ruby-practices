@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NoOption
+class NoOptionFormatter
   def initialize(segments)
     @segments = segments
   end
