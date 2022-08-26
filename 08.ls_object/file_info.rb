@@ -8,7 +8,7 @@ class FileInfo
 
   FTYPE = { 'fifo' => 'p', 'characterSpecial' => 'c', 'directory' => 'd', 'blockSpecial' => 'b', 'file' => '-', 'link' => 'l', 'socket' => 's' }.freeze
 
-  def initialize(segment)
+  def initialize(segment, argv)
     @segment = segment
     @total = examine_total
     @filetype = examine_filetype
@@ -18,6 +18,7 @@ class FileInfo
     @group = examine_group
     @filesize = examine_filesize
     @timestamp = examine_timestamp
+    @argv = argv
   end
 
   private
@@ -35,7 +36,7 @@ class FileInfo
   end
 
   def path
-    Pathname.new(File.expand_path(ARGV[0].to_s) << '/' << @segment)
+    Pathname.new(File.expand_path(@argv.to_s) << '/' << @segment)
   end
 
   def base

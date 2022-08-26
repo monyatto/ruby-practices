@@ -6,9 +6,10 @@ require 'pathname'
 require 'etc'
 
 class LongOptionFormatter
-  def initialize(segments, file_informations)
+  def initialize(segments, file_informations, argv)
     @file_informations = file_informations
     @segments = segments
+    @argv = argv
   end
 
   def format
@@ -49,7 +50,7 @@ class LongOptionFormatter
   end
 
   def path(segment)
-    Pathname.new(File.expand_path(ARGV[0].to_s) << '/' << segment)
+    Pathname.new(File.expand_path(@argv.to_s) << '/' << segment)
   end
 
   def owners
