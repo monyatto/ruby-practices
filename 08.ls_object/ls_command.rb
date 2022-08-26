@@ -5,7 +5,7 @@ require_relative 'format_long_option'
 require_relative 'long_option'
 require_relative 'no_option'
 
-class Directory
+class LsCommand
   def initialize(argument)
     @argument = argument
     @segments = segments

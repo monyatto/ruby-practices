@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'argument'
-require_relative 'directory'
+require_relative 'ls_command'
 
 argument = Argument.new
-dir = Directory.new(argument)
-dir.list_segment
+ls = LsCommand.new(argument)
+ls.list_segment

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'long_option'
-require_relative 'directory'
+require_relative 'ls_command'
 require 'pathname'
 require 'etc'
 
