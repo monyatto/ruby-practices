@@ -10,7 +10,7 @@ class NoOptionFormatter
   def format
     row.times do |row_num|
       COLUMN.times do |column_num|
-        print @segments[print_num(row, row_num, column_num)].ljust(max_length(@segments, 3)) unless @segments[print_num(row, row_num, column_num)].nil?
+        print @segments[segment_index(row, row_num, column_num)].ljust(max_length(@segments, 3)) unless @segments[segment_index(row, row_num, column_num)].nil?
         puts '' if column_num == (COLUMN - 1)
       end
     end
@@ -22,7 +22,7 @@ class NoOptionFormatter
     (@segments.size / COLUMN.to_f).ceil
   end
 
-  def print_num(row, row_num, column_num)
+  def segment_index(row, row_num, column_num)
     row_num + row * column_num
   end
 
