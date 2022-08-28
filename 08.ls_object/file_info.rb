@@ -7,6 +7,7 @@ class FileInfo
   attr_reader :segment, :total, :filetype, :permission, :hardlink, :owner, :group, :filesize, :timestamp
 
   FTYPE = { 'fifo' => 'p', 'characterSpecial' => 'c', 'directory' => 'd', 'blockSpecial' => 'b', 'file' => '-', 'link' => 'l', 'socket' => 's' }.freeze
+  PERMISSION = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }.freeze
 
   def initialize(segment, argv)
     @segment = segment
@@ -48,8 +49,7 @@ class FileInfo
   end
 
   def chars_permission(unshift_filestat, letters)
-    permission = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
-    permission[unshift_filestat[letters]]
+    PERMISSION[unshift_filestat[letters]]
   end
 
   def unshift_filestat
